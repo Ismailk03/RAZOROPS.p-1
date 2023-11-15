@@ -2,6 +2,7 @@
 
 version: 2
 workflows:
+  version: 1
   deploy_to_s3:
     jobs:
       - deploy_to_s3:
@@ -20,7 +21,7 @@ workflows:
             - name: Configure AWS CLI
               env:
                 AWS_ACCESS_KEY_ID: ${{ secrets.AKIAUEEQUF2IBS4VSQF2 }}
-                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ }}
               run: |
                 aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
                 aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
