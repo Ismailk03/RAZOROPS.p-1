@@ -1,7 +1,7 @@
 # razorops.yaml
 
 workflows:
-  version: 2
+  version: 1
   deploy_to_s3:
     jobs:
       - deploy_to_s3:
