@@ -4,29 +4,21 @@ version: 2
 workflows:
   deploy_to_s3:
     jobs:
-        - name: Deploy to S3
-          docker:
-            - image: ubuntu:20.04
+      - name: deploy_to_s3
+        docker:
+          - image: ubuntu:20.04
 
-          steps:
-            - checkout
+        steps:
+          - checkout
 
-            - name: Install AWS CLI
-              run: |
-                apt-get update -y
-                apt-get install -y awscli
+          - run: |
+              apt-get update -y
+              apt-get install -y awscli
 
-            - name: Configure AWS CLI
-              env:
-                AWS_ACCESS_KEY_ID: ${{ secrets.AKIAUEEQUF2IBS4VSQF2 }}
-                AWS_SECRET_ACCESS_KEY: ${{ secrets.Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ }}
-              run: |
-                aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-                aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-                aws configure set default.region us-east-1
+          - run: |
+              aws configure set aws_access_key_id ${{ secrets.AKIAUEEQUF2IBS4VSQF2 }}
+              aws configure set aws_secret_access_key ${{ secrets.Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ }}
+              aws configure set default.region us-east-1
 
-            - name: Deploy to S3
-              env:
-                S3_BUCKET_NAME: ${{ secrets.razorops.p-1 }}
-              run: |
-                aws s3 sync . s3://$S3_BUCKET_NAME --delete
+          - run: |
+              aws s3 sync . s3://${{ secrets.razorops.p-1 }} --delete
