@@ -16,8 +16,8 @@ jobs:
 
       - name: Configure AWS CLI
         env:
-          AWS_ACCESS_KEY_ID: ${{ AKIAUEEQUF2IBS4VSQF2}}
-          AWS_SECRET_ACCESS_KEY: ${{ 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}}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AKIAUEEQUF2IBS4VSQF2 }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ }}
         run: |
           aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
           aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
@@ -27,4 +27,4 @@ jobs:
         env:
           S3_BUCKET_NAME: ${{ secrets.razorops.p-1 }}
         run: |
-          aws s3 sync . s3://$razorops.p-1 --delete
+          aws s3 sync . s3://$S3_BUCKET_NAME --delete
