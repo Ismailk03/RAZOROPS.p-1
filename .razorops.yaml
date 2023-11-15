@@ -1,0 +1,30 @@
+# razorops.yaml
+
+jobs:
+  - name: deploy_to_s3
+    docker:
+      - image: python:3.8
+
+    steps:
+      - name: Checkout repository
+        checkout: self
+
+      - name: Install AWS CLI
+        script:
+          - apt-get update -qy
+          - apt-get install -y awscli
+
+      - name: Configure AWS CLI
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AKIAUEEQUF2IBS4VSQF2}}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ}}
+        script:
+          - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          - aws configure set default.region us-east-1
+
+      - name: Deploy to S3
+        env:
+          S3_BUCKET_NAME: ${{ secrets.razorops.p-1 }}
+        script:
+          - aws s3 sync . s3://$razorops.p-1--delete
