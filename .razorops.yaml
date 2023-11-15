@@ -4,8 +4,7 @@ version: 2
 workflows:
   deploy_to_s3:
     jobs:
-      - deploy_to_s3:
-          name: Deploy to S3
+        - name: Deploy to S3
           docker:
             - image: ubuntu:20.04
 
