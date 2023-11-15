@@ -1,30 +1,33 @@
 # razorops.yaml
 
-jobs:
-  - name: deploy_to_s3
-    docker:
-      - image: ubuntu:20.04
+workflows:
+  version: 1
+  deploy_to_s3:
+    jobs:
+      - name: deploy_to_s3
+        docker:
+          - image: ubuntu:20.04
 
-    steps:
-      - name: Checkout repository
-        checkout: self
+        steps:
+          - checkout: self
 
-      - name: Install AWS CLI
-        run: |
-          apt-get update -y
-          apt-get install -y awscli
+          - name: Install AWS CLI
+            run: |
+              apt-get update -y
+              apt-get install -y awscli
 
-      - name: Configure AWS CLI
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AKIAUEEQUF2IBS4VSQF2 }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ }}
-        run: |
-          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-          aws configure set default.region us-east-1
+          - name: Configure AWS CLI
+            env:
+              AWS_ACCESS_KEY_ID: ${{ secrets.AKIAUEEQUF2IBS4VSQF2}}
+              AWS_SECRET_ACCESS_KEY: ${{ secrets.Wt1dRIN1EG3JsT1sCEzBMVZVCgjkhCmobLt3oMtJ }}
+            run: |
+              aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+              aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+              aws configure set default.region us-east-1
 
-      - name: Deploy to S3
-        env:
-          S3_BUCKET_NAME: ${{ secrets.razorops.p-1 }}
-        run: |
-          aws s3 sync . s3://$S3_BUCKET_NAME --delete
+          - name: Deploy to S3
+            env:
+              S3_BUCKET_NAME: ${{ secrets.razorops.p-1 }}
+            run: |
+              aws s3 sync . s3://$S3_BUCKET_NAME --delete
+
